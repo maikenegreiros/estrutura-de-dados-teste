@@ -1,0 +1,126 @@
+In this article, we’re going to discuss the miscellaneous Git commands you should know as a developer, data scientist, or product manager. We’ll look at inspecting, removing, and tidying with Git. We’ll also cover ways to escape Vim and save time with Bash aliases and Git editor configuration.
+
+If you aren’t comfortable with basic git commands, check out my previous article on Git workflows before reading this one.
+
+Learn Enough Git to be Useful
+
+4 Essential Workflows for GitHub Projects
+towardsdatascience.com	
+Here are 10 commands to know and some of their common flags. Each command links to the Atlassian Bitbucket guide for that command.
+
+Inspecting Things
+Let’s look at inspecting changes first.
+
+
+git diff— See all file changes locally. A file name can be appended to show changes for only one file. 📂
+git log — See all commit history. Can also be used for a file with git log -p my_file. Enter q to exit. 📓
+git blame my_file— See who changed what and when in my_file. 👉
+git reflog — Show a log of changes to the local repository’s HEAD. Good for finding lost work. 🔎
+Inspecting things with Git isn’t terribly confusing. In contrast, Git provides a plethora of options for removing and undoing commits and file changes.
+
+Undoing Things
+git reset, git checkout, and git revert are used to undo the effects of changes to your repository. These commands can be tricky to keep straight.
+
+git reset and git checkout can be used on both commits and individual files.git revert is used only at the commit level.
+
+If you are just dealing with your own local commits that haven’t been merged into collaborative remote work, you can use any of these commands.
+
+If you are working collaboratively and need to neutralize a commit in the remote branch, git revert is your tool.
+
+
+Each of these commands can take a variety of options. Here are common uses:
+
+git reset --hard HEAD— Discard staged and unstaged changes since the most recent commit.
+Specify a different commit instead of HEAD to discard changes since that commit. --hard specifies that both the staged and unstaged changes are discarded.
+
+Make sure you don’t discard a commit from a remote branch that your collaborators are depending upon!
+
+git checkout my_commit— Discard unstaged changes since my_commit.
+HEAD is often used for my_commit to discard changes to your local working directory since the most recent commit.
+
+checkout is best used for local-only undos. It doesn’t mess up the commit history from a remote branch that your collaborators are depending upon!
+
+If you use checkout with a branch instead of a commit, HEAD is switched to the specified branch and the working directory is updated to match. This is the more common use of the checkout command.
+
+git revert my_commit —Undo the effects of changes in my_commit. revert makes a new commit when it undoes the changes.
+revert is safe for collaborative projects because it doesn’t overwrite history that other users’ branches might depend upon.
+
+
+revert is safe
+Sometimes you just want to delete untracked files in your local directory. For example, maybe you ran some code that created lots of different types of files that you don’t want in your repo. Oops. 😏 You can clean them in a flash!
+
+git clean -n —Delete untracked files in the local working directory.
+The -n flag is for a dry run where nothing is deleted.
+
+Use the -f flag to actually remove the files.
+
+Use the -d flag to remove untracked directories.
+
+By default files untracked by .gitignore will not be deleted, but this behavior can be altered.
+
+
+Now that you know the tools for undoing things in Git, let’s look at two more commands to keep things orderly.
+
+Tidying Things
+git commit --amend — Add your staged changes to the most recent commit.
+If nothing is staged, this command just allows you to edit the most recent commit message. Only use this command if the commit has not been integrated into the remote master branch!
+
+git push my_remote --tags —Send all local tags to the remote repo. Good for versioning changes.
+If you’re using Python and making changes to a package you built, bump2version will automatically create tags for you. Once you’ve pushed your tags, you can use them in your releases. Here’s my guide to making your first OSS Python package. Follow me to make sure you don’t miss the part on versioning!
+
+Help, I’m Stuck in Vim and Can’t Get Out!
+With Git, you might occasionally find yourself thrown into a Vim editor session. For example, say you tried to commit without a commit message — Vim will open automatically. If you don’t know Vim, this kind of stinks — see 4,000+ up votes on this Stack Overflow answer for how to get out of it.
+
+
+Freedom!
+Here’s your four-step plan to escape Vim with a saved file:
+
+Press i to enter insert mode.
+Type your commit message on the first line.
+Press the escape key — Esc.
+Enter :x. Don’t forget the colon.
+Voilà, you’re free! 😄
+
+Change Default Editor
+To avoid Vim altogether, you can change your default editor in Git. Here are docs with the commands for common editors. Here’s the command to change the default for the editor I use, Atom:
+
+git config --global core.editor "atom --wait"
+
+Assuming you have Atom installed, you can now resolve your Git issues inside it. Yeah! 👍
+
+Make Shortcuts for Git Commands
+
+Add shortcuts for Git commands by adding the following aliases to your .bash_profile.
+
+alias gs='git status '
+alias ga='git add '
+alias gaa='git add -A '
+alias gb='git branch '
+alias gc='git commit '
+alias gcm='git commit -m '
+alias go='git checkout '
+You can adjust to make shortcuts for whatever Git commands you like.
+
+If you don’t have a .bash_profile, you can make one on macOS with the following:
+
+touch ~/.bash_profile
+
+and then open it with:
+
+open ~/.bash_profile
+
+See more info on .bash_profile here.
+
+Now when you type gs in your terminal it’s the same as typing git status. Note that you can enter other flags in your terminal after your shortcut.
+
+You also can make Git aliases, but those require you to type git before your shortcut command. Who needs those extra key strokes? 😉
+
+Wrap
+In this article you have seen a bunch of key Git commands and configured your environment to save you time. Now you have a foundation in Git and GitHub. Ready for next steps?
+
+Check out this Bitbucket Git tutorial to go deeper.
+Explore this interactive guide to Git branching. Branching can be confusing, so it’s definitely worth a look. 🔎
+Go play, learn, and explain the differences to someone else.
+I hope you found this intro to Git and GitHub useful. If you did, please share it on your favorite social media channels so others can find it too. 👏
+
+I write about how to use Python, Docker, and other programming and data science tools effectively and efficiently. If that’s of interest to you, follow me and read more here.
